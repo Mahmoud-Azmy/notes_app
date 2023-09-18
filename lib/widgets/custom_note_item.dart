@@ -26,7 +26,7 @@ class CustomNoteItem extends StatelessWidget {
               child: Text(
                 'ronaldo is the greatest of all time',
                 style: TextStyle(
-                    color: Colors.black.withOpacity(.4), fontSize: 16),
+                    color: Colors.black.withOpacity(.4), fontSize: 15),
               ),
             ),
             trailing: IconButton(
@@ -41,7 +41,8 @@ class CustomNoteItem extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 24, right: 24),
             child: Text(
               '18 Sep,2023',
-              style: TextStyle(color: Colors.black.withOpacity(.4)),
+              style:
+                  TextStyle(color: Colors.black.withOpacity(.4), fontSize: 13),
             ),
           )
         ],

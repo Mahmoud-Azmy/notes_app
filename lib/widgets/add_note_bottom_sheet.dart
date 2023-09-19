@@ -12,27 +12,65 @@ class AddNoteBottomSheet extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(top: 38, right: 24, left: 24),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomTextField(
-              text: 'Title',
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            CustomTextField(
-              text: 'Content',
-              maxLines: 5,
-            ),
-            SizedBox(
-              height: 48,
-            ),
-            CustomBottom(),
-            SizedBox(
-              height: 24,
-            )
-          ],
-        ),
+        child: FormBottomSheet(),
+      ),
+    );
+  }
+}
+
+class FormBottomSheet extends StatefulWidget {
+  const FormBottomSheet({
+    super.key,
+  });
+
+  @override
+  State<FormBottomSheet> createState() => _FormBottomSheetState();
+}
+
+class _FormBottomSheetState extends State<FormBottomSheet> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  String? title, subTitle;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      autovalidateMode: autovalidateMode,
+      child: Column(
+        children: [
+          CustomTextField(
+            onSaved: (value) {
+              title = value;
+            },
+            text: 'Title',
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          CustomTextField(
+            onSaved: (value) {
+              subTitle = value;
+            },
+            text: 'Content',
+            maxLines: 5,
+          ),
+          const SizedBox(
+            height: 48,
+          ),
+          CustomBottom(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+              } else {
+                autovalidateMode = AutovalidateMode.always;
+                setState(() {});
+              }
+            },
+          ),
+          const SizedBox(
+            height: 24,
+          )
+        ],
       ),
     );
   }

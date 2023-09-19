@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomSearchIcon extends StatelessWidget {
-  const CustomSearchIcon({
-    super.key,
-  });
+  const CustomSearchIcon({super.key, required this.icon});
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +12,6 @@ class CustomSearchIcon extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white.withOpacity(.03),
             borderRadius: BorderRadius.circular(16)),
-        child: IconButton(
-            onPressed: () {},
-            icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 28)));
+        child: IconButton(onPressed: () {}, icon: Icon(icon, size: 26)));
   }
 }

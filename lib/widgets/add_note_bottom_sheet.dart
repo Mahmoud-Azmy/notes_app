@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/cubits/add_notes/add_notes_cubit.dart';
 import 'package:note_app/cubits/add_notes/add_notes_states.dart';
+import 'package:note_app/models/note_model.dart';
 
 import 'package:note_app/widgets/custom_bottom.dart';
 
@@ -14,18 +15,16 @@ class AddNoteBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 38, right: 24, left: 24),
-      child: SingleChildScrollView(
-        child: BlocConsumer<AddNotesCubit, AddNotesStates>(
-          listener: (context, state) {
-            if (state is AddNotesSuccessState) Navigator.pop(context);
-            if (state is AddNotesfailureState) print('failed ${state.error}');
-          },
-          builder: (context, state) {
-            return state is AddNotesLoadingState
-                ? const Center(child: CircularProgressIndicator())
-                : const FormBottomSheet();
-          },
-        ),
+      child: BlocConsumer<AddNotesCubit, AddNotesStates>(
+        listener: (context, state) {
+          if (state is AddNotesSuccessState) Navigator.pop(context);
+          if (state is AddNotesfailureState) print('failed ${state.error}');
+        },
+        builder: (context, state) {
+          return state is AddNotesLoadingState
+              ? const Center(child: CircularProgressIndicator())
+              : const SingleChildScrollView(child: FormBottomSheet());
+        },
       ),
     );
   }
@@ -74,7 +73,12 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-                //  AddNotesCubit.get(context).addNote(n)
+                NoteModel noteModel = NoteModel(
+                    title: title!,
+                    subTitle: subTitle!,
+                    date: DateTime.now().toString(),
+                    color: Colors.blue.value);
+                AddNotesCubit.get(context).addNote(noteModel);
               } else {
                 autovalidateMode = AutovalidateMode.always;
                 setState(() {});

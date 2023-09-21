@@ -1,30 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:note_app/models/note_model.dart';
 import 'package:note_app/widgets/custom_appbar.dart';
 import 'package:note_app/widgets/custom_text_field.dart';
 
-class EditNotesViewBody extends StatelessWidget {
-  const EditNotesViewBody({super.key});
+class EditNotesViewBody extends StatefulWidget {
+  const EditNotesViewBody({super.key, required this.noteModel});
+  final NoteModel noteModel;
 
   @override
+  State<EditNotesViewBody> createState() => _EditNotesViewBodyState();
+}
+
+class _EditNotesViewBodyState extends State<EditNotesViewBody> {
+  String? title, subTitle;
+  @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 55, left: 24, right: 24),
+    return Padding(
+      padding: const EdgeInsets.only(top: 55, left: 24, right: 24),
       child: SingleChildScrollView(
         child: Column(
           children: [
             CustomAppBar(
+              onPressed: () {
+                widget.noteModel.title = title ?? widget.noteModel.title;
+                widget.noteModel.subTitle =
+                    subTitle ?? widget.noteModel.subTitle;
+                widget.noteModel.save();
+                NotesCubit.get(context).fetchAllNotes();
+                Navigator.pop(context);
+              },
               text: 'Edit Note',
               icon: FontAwesomeIcons.check,
             ),
-            SizedBox(
+            const SizedBox(
               height: 28,
             ),
-            CustomTextField(text: 'Title'),
-            SizedBox(
+            CustomTextField(
+              text: 'Title',
+              onChanged: (p0) {
+                title = p0;
+              },
+            ),
+            const SizedBox(
               height: 16,
             ),
             CustomTextField(
+              onChanged: (p0) {
+                subTitle = p0;
+              },
               text: 'Content',
               maxLines: 5,
             ),

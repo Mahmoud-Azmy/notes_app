@@ -19,7 +19,10 @@ class AddNoteBottomSheet extends StatelessWidget {
       create: (context) => AddNotesCubit(),
       child: BlocConsumer<AddNotesCubit, AddNotesStates>(
         listener: (context, state) {
-          if (state is AddNotesSuccessState) Navigator.pop(context);
+          if (state is AddNotesSuccessState) {
+            Navigator.pop(context);
+            NotesCubit.get(context).fetchAllNotes();
+          }
           if (state is AddNotesfailureState) print('failed ${state.error}');
         },
         builder: (context, state) {
@@ -90,7 +93,6 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                     date: formatedDate,
                     color: Colors.blue.value);
                 AddNotesCubit.get(context).addNote(noteModel);
-                NotesCubit.get(context).fetchAllNotes();
               } else {
                 autovalidateMode = AutovalidateMode.always;
                 setState(() {});

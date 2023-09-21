@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:note_app/cubits/add_note/add_note_cubit.dart';
 import 'package:note_app/cubits/add_note/add_note_states.dart';
 import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
@@ -81,10 +82,12 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
+                var currentDate = DateTime.now();
+                var formatedDate = DateFormat().add_yMMMd().format(currentDate);
                 NoteModel noteModel = NoteModel(
                     title: title!,
                     subTitle: subTitle!,
-                    date: DateTime.now().toString(),
+                    date: formatedDate,
                     color: Colors.blue.value);
                 AddNotesCubit.get(context).addNote(noteModel);
                 NotesCubit.get(context).fetchAllNotes();

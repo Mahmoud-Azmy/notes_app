@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/cubits/add_note/add_note_cubit.dart';
 import 'package:note_app/cubits/add_note/add_note_states.dart';
+import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:note_app/models/note_model.dart';
 
 import 'package:note_app/widgets/custom_bottom.dart';
@@ -86,6 +87,7 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                     date: DateTime.now().toString(),
                     color: Colors.blue.value);
                 AddNotesCubit.get(context).addNote(noteModel);
+                NotesCubit.get(context).fetchAllNotes();
               } else {
                 autovalidateMode = AutovalidateMode.always;
                 setState(() {});

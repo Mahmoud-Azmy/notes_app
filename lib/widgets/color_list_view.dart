@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
-import 'package:note_app/cubits/notes_cubit/notes_states.dart';
+import 'package:note_app/cubits/add_note/add_note_cubit.dart';
+import 'package:note_app/cubits/add_note/add_note_states.dart';
 
 class ColorListView extends StatelessWidget {
   const ColorListView({
@@ -10,7 +10,7 @@ class ColorListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotesCubit, NotesStates>(
+    return BlocBuilder<AddNotesCubit, AddNotesStates>(
       builder: (context, state) {
         return SizedBox(
           height: 74,
@@ -22,16 +22,18 @@ class ColorListView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: GestureDetector(
                   onTap: () {
-                    NotesCubit.get(context).selectActiveColor(index);
+                    AddNotesCubit.get(context).color =
+                        AddNotesCubit.get(context).colos[index];
+                    AddNotesCubit.get(context).selectActiveColor(index);
                   },
                   child: ColorItem(
-                    color: NotesCubit.get(context).colos[index],
-                    isActive: NotesCubit.get(context).currentIndex == index,
+                    color: AddNotesCubit.get(context).colos[index],
+                    isActive: AddNotesCubit.get(context).currentIndex == index,
                   ),
                 ),
               );
             },
-            itemCount: NotesCubit.get(context).colos.length,
+            itemCount: AddNotesCubit.get(context).colos.length,
           ),
         );
       },

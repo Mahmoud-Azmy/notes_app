@@ -15,8 +15,13 @@ class EditNotesViewBody extends StatefulWidget {
 
 class _EditNotesViewBodyState extends State<EditNotesViewBody> {
   String? title, subTitle;
+  var titleController = TextEditingController();
+  var subTitleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    titleController.text = widget.noteModel.title;
+    subTitleController.text = widget.noteModel.subTitle;
     return Padding(
       padding: const EdgeInsets.only(top: 55, left: 24, right: 24),
       child: SingleChildScrollView(
@@ -38,6 +43,7 @@ class _EditNotesViewBodyState extends State<EditNotesViewBody> {
               height: 28,
             ),
             CustomTextField(
+              controller: titleController,
               text: 'Title',
               onChanged: (p0) {
                 title = p0;
@@ -47,6 +53,7 @@ class _EditNotesViewBodyState extends State<EditNotesViewBody> {
               height: 16,
             ),
             CustomTextField(
+              controller: subTitleController,
               onChanged: (p0) {
                 subTitle = p0;
               },

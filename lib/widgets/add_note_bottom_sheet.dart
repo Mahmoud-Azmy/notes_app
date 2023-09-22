@@ -5,6 +5,7 @@ import 'package:note_app/cubits/add_note/add_note_cubit.dart';
 import 'package:note_app/cubits/add_note/add_note_states.dart';
 import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:note_app/models/note_model.dart';
+import 'package:note_app/widgets/color_list_view.dart';
 
 import 'package:note_app/widgets/custom_bottom.dart';
 
@@ -79,7 +80,11 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
             maxLines: 5,
           ),
           const SizedBox(
-            height: 48,
+            height: 24,
+          ),
+          const ColorListView(),
+          const SizedBox(
+            height: 32,
           ),
           CustomBottom(
             onPressed: () {

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:note_app/cubits/add_note/add_note_cubit.dart';
-
-import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:note_app/cubits/notes_cubit.dart';
 import 'package:note_app/models/note_model.dart';
-import 'package:note_app/widgets/color_list_view.dart';
 import 'package:note_app/widgets/custom_appbar.dart';
 import 'package:note_app/widgets/custom_text_field.dart';
+import 'package:note_app/widgets/edit_color_list_view.dart';
 
 class EditNotesViewBody extends StatefulWidget {
   const EditNotesViewBody({super.key, required this.noteModel});
@@ -34,7 +31,7 @@ class _EditNotesViewBodyState extends State<EditNotesViewBody> {
             onPressed: () {
               widget.noteModel.title = title ?? widget.noteModel.title;
               widget.noteModel.subTitle = subTitle ?? widget.noteModel.subTitle;
-              widget.noteModel.color = AddNotesCubit.get(context).color.value;
+              // widget.noteModel.color = NotesCubit.get(context).color.value;
               widget.noteModel.save();
               NotesCubit.get(context).fetchAllNotes();
               Navigator.pop(context);
@@ -66,7 +63,9 @@ class _EditNotesViewBodyState extends State<EditNotesViewBody> {
           const SizedBox(
             height: 24,
           ),
-          const ColorListView()
+          EditNoteColorListView(
+            noteModel: widget.noteModel,
+          )
         ],
       ),
     );

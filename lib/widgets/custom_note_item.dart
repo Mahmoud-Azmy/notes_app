@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
+
+import 'package:note_app/cubits/notes_cubit.dart';
+
 import 'package:note_app/models/note_model.dart';
 import 'package:note_app/views/edit_notes_view.dart';
 
@@ -15,6 +17,8 @@ class CustomNoteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        NotesCubit.get(context).editCurrentIndex =
+            NotesCubit.get(context).colosList.indexOf(Color(noteModel.color));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return EditNotesView(
             noteModel: noteModel,

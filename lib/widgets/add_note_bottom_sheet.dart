@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:note_app/cubits/add_note/add_note_cubit.dart';
-import 'package:note_app/cubits/add_note/add_note_states.dart';
-import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:note_app/cubits/notes_cubit.dart';
+import 'package:note_app/cubits/notes_states.dart';
 import 'package:note_app/models/note_model.dart';
-import 'package:note_app/widgets/color_list_view.dart';
+import 'package:note_app/widgets/add_color_list_view.dart';
 
 import 'package:note_app/widgets/custom_bottom.dart';
 
@@ -16,7 +15,7 @@ class AddNoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddNotesCubit, AddNotesStates>(
+    return BlocConsumer<NotesCubit, NotesStates>(
       listener: (context, state) {
         if (state is AddNotesSuccessState) {
           Navigator.pop(context);
@@ -79,7 +78,7 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
           const SizedBox(
             height: 24,
           ),
-          const ColorListView(),
+          const AddColorListView(),
           const SizedBox(
             height: 32,
           ),
@@ -94,7 +93,8 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                     subTitle: subTitle!,
                     date: formatedDate,
                     color: Colors.blue.value);
-                AddNotesCubit.get(context).addNote(noteModel);
+                NotesCubit.get(context).addNote(noteModel);
+                NotesCubit.get(context).currentIndex = 0;
               } else {
                 autovalidateMode = AutovalidateMode.always;
                 setState(() {});
